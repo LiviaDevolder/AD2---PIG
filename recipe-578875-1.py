@@ -238,6 +238,8 @@ class clock:
         self.redraw()
         self.root.after(200,self.poll)
 
+    """Get sunrise and sunset time from location"""
+
     def daylight(self):
         today = datetime.date (datetime.now ())
         city = LocationInfo("Bahia", "Brazil", 'America/Bahia', -23.6, -46.6)
