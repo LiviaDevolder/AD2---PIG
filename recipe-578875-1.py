@@ -260,7 +260,7 @@ def main(argv=None):
     root = Tk()
     root.geometry ('+0+0')
     # deltahours: how far are you from utc?
-    # Sometimes the clock may be run from another timezone ...
+    # Sometimes the clock may be run from another timezone ..
     clock(root,deltahours,sImage,w,h,t)
 
     root.mainloop()
