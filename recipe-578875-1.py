@@ -213,8 +213,10 @@ class clock:
         x, y = cos(angle)*0.95,sin(angle)*0.95
         # draw the second handle
         scl(self.T.windowToViewport(0,0,x,y), fill = self.timecolor, tag=self._ALL, arrow = 'last')
+        angle = pi/2 - 2*pi*(h%24)/24 + 2*pi*m/24/60
+        x, y = cos(angle)*0.90,sin(angle)*0.90
         # draw the red handle
-        scl(self.T.windowToViewport(0,0,x,y), fill = self.redhandle)
+        scl(self.T.windowToViewport(0,0,x,y), fill = self.redhandle, tag=self._ALL)
 
     ## Draws a circle at a given point.
     #
