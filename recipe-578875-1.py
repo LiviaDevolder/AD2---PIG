@@ -21,15 +21,15 @@ try:
 except ImportError:
     hasPIL = False
 
-## Class for handling the mapping from window coordinates
-#  to viewport coordinates.
-#
+""" Class for handling the mapping from window coordinates
+  to viewport coordinates."""
+
 class mapper:
-    ## Constructor.
-    #
-    #  @param world window rectangle.
-    #  @param viewport screen rectangle.
-    #
+    """ Constructor.
+    
+     @param world window rectangle.
+     @param viewport screen rectangle."""
+    
     def __init__(self, world, viewport):
         self.world = world
         self.viewport = viewport
@@ -45,62 +45,62 @@ class mapper:
         self.c_1 = X_c - self.f * x_c
         self.c_2 = Y_c - self.f * y_c
 
-    ## Maps a single point from world coordinates to viewport (screen) coordinates.
-    #
-    #  @param x, y given point.
-    #  @return a new point in screen coordinates.
-    #
+    """Maps a single point from world coordinates to viewport (screen) coordinates.
+    
+    @param x, y given point.
+    @return a new point in screen coordinates."""
+    
     def __windowToViewport(self, x, y):
         X = self.f *  x + self.c_1
         Y = self.f * -y + self.c_2      # Y axis is upside down
         return X , Y
 
-    ## Maps two points from world coordinates to viewport (screen) coordinates.
-    #
-    #  @param x1, y1 first point.
-    #  @param x2, y2 second point.
-    #  @return two new points in screen coordinates.
-    #
+    """ Maps two points from world coordinates to viewport (screen) coordinates.
+    
+    @param x1, y1 first point.
+    @param x2, y2 second point.
+    @return two new points in screen coordinates."""
+    
     def windowToViewport(self,x1,y1,x2,y2):
         return self.__windowToViewport(x1,y1),self.__windowToViewport(x2,y2)
 
-## Class for creating a new thread.
-#
+""" Class for creating a new thread. """
+
 class makeThread (Thread):
-      """Creates a thread."""
+        """Creates a thread.
 
-      ## Constructor.
-      #  @param func function to run on this thread.
-      #
-      def __init__ (self,func):
-          Thread.__init__(self)
-          self.__action = func
-          self.debug = False
+        Constructor.
+        
+        @param func function to run on this thread."""
 
-      ## Destructor.
-      #
-      def __del__ (self):
-          if ( self.debug ): print ("Thread end")
+        def __init__ (self,func):
+            Thread.__init__(self)
+            self.__action = func
+            self.debug = False
 
-      ## Starts this thread.
-      #
-      def run (self):
-          if ( self.debug ): print ("Thread begin")
-          self.__action()
+        """Destructor """
+        def __del__ (self):
+            if ( self.debug ): print ("Thread end")
 
-## Class for drawing a simple analog clock.
-#  The backgroung image may be changed by pressing key 'i'.
-#  The image path is hardcoded. It should be available in directory 'images'.
-#
+        """ Starts this thread."""
+        
+        def run (self):
+            if ( self.debug ): print ("Thread begin")
+            self.__action()
+
+"""Class for drawing a simple analog clock.
+ The backgroung image may be changed by pressing key 'i'.
+ The image path is hardcoded. It should be available in directory 'images'."""
+
 class clock:
-    ## Constructor.
-    #
-    #  @param deltahours time zone.
-    #  @param sImage whether to use a background image.
-    #  @param w canvas width.
-    #  @param h canvas height.
-    #  @param useThread whether to use a separate thread for running the clock.
-    #
+    """Constructor.
+
+    @param deltahours time zone.
+    @param sImage whether to use a background image.
+    @param w canvas width.
+    @param h canvas height.
+    @param useThread whether to use a separate thread for running the clock."""
+
     def __init__(self,root,deltahours = 0,sImage = True,w = 400,h = 400,useThread = False):
         self.world       = [-1,-1,1,1]
         self.imgPath     = './images/fluminense.png'  # image path
@@ -136,8 +136,8 @@ class clock:
         else:
            self.poll()
 
-    ## Called when the window changes, by means of a user input.
-    #
+    """Called when the window changes, by means of a user input."""
+
     def resize(self,event):
         sc = self.canvas
         sc.delete(ALL)            # erase the whole canvas
@@ -158,8 +158,8 @@ class clock:
 
         self.redraw()             # redraw the clock
 
-    ## Sets the clock colors.
-    #
+    """Sets the clock colors."""
+    
     def setColors(self):
         if self.showImage:
            self.bgcolor     = 'antique white'
@@ -172,16 +172,16 @@ class clock:
            self.circlecolor = '#808080'
            self.redhandle   = '#b80000'
 
-    ## Toggles the displaying of a background image.
-    #
+    """Toggles the displaying of a background image."""
+
     def toggleImage(self,event):
         if hasPIL and os.path.exists (self.imgPath):
            self.showImage = not self.showImage
            self.setColors()
            self.resize(event)
 
-    ## Redraws the whole clock.
-    #
+    """Redraws the whole clock."""
+
     def redraw(self):
         start = pi/2              # 12h is at pi/2
         step = pi/6
@@ -193,8 +193,8 @@ class clock:
         if not self.showImage:
            self.paintcircle(0,0)  # draw a circle at the centre of the clock
 
-    ## Draws the handles.
-    #
+    """Draws the handles."""
+
     def painthms(self):
         self.canvas.delete(self._ALL)  # delete the handles
         T = datetime.timetuple(datetime.utcnow()-self.delta)
@@ -218,26 +218,26 @@ class clock:
         # draw the red handle
         scl(self.T.windowToViewport(0,0,x,y), fill = self.redhandle, tag=self._ALL)
 
-    ## Draws a circle at a given point.
-    #
-    #  @param x,y given point.
-    #
+    """Draws a circle at a given point.
+    
+    @param x,y given point."""
+
     def paintcircle(self,x,y):
         ss = self.circlesize / 2.0
         sco = self.canvas.create_oval
         sco(self.T.windowToViewport(-ss+x,-ss+y,ss+x,ss+y), fill = self.circlecolor)
 
-    ## Animates the clock, by redrawing everything after a certain time interval.
-    #
+    """Animates the clock, by redrawing everything after a certain time interval."""    
+
     def poll(self):
         self.redraw()
         self.root.after(200,self.poll)
 
-## Main program for testing.
-#
-#  @param argv time zone, image background flag,
-#         clock width, clock height, create thread flag.
-#
+"""Main program for testing.
+
+ @param argv time zone, image background flag,
+        clock width, clock height, create thread flag."""
+
 def main(argv=None):
     if argv is None:
        argv = sys.argv
@@ -260,7 +260,7 @@ def main(argv=None):
     root = Tk()
     root.geometry ('+0+0')
     # deltahours: how far are you from utc?
-    # Sometimes the clock may be run from another timezone ...
+    # Sometimes the clock may be run from another timezone ..
     clock(root,deltahours,sImage,w,h,t)
 
     root.mainloop()
