@@ -200,9 +200,13 @@ class clock:
         T = datetime.timetuple(datetime.utcnow()-self.delta)
         x,x,x,h,m,s,x,x,x = T
         self.root.title('%02i:%02i:%02i' %(h,m,s))
+        scl = self.canvas.create_line
+        angle = pi/2 - pi/12 * (h + m/60.0) # pi/2 - 2*pi*(h%24)/24 + 2*pi*m/24/60
+        x, y = cos(angle)*0.60,sin(angle)*0.60
+        # draw the red handle
+        scl(self.T.windowToViewport(0,0,x,y), fill = self.redhandle, tag=self._ALL, width = self.pad/4)
         angle = pi/2 - pi/6 * (h + m/60.0)
         x, y = cos(angle)*0.70,sin(angle)*0.70
-        scl = self.canvas.create_line
         # draw the hour handle
         scl(self.T.windowToViewport(0,0,x,y), fill = self.timecolor, tag=self._ALL, width = self.pad/3)
         angle = pi/2 - pi/30 * (m + s/60.0)
@@ -213,10 +217,6 @@ class clock:
         x, y = cos(angle)*0.95,sin(angle)*0.95
         # draw the second handle
         scl(self.T.windowToViewport(0,0,x,y), fill = self.timecolor, tag=self._ALL, arrow = 'last')
-        angle = pi/2 - 2*pi*(h%24)/24 + 2*pi*m/24/60
-        x, y = cos(angle)*0.90,sin(angle)*0.90
-        # draw the red handle
-        scl(self.T.windowToViewport(0,0,x,y), fill = self.redhandle, tag=self._ALL)
 
     ## Draws a circle at a given point.
     #
