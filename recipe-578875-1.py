@@ -1,3 +1,4 @@
+from ast import If
 import sys, types, os
 from time import localtime
 from datetime import timedelta,datetime
@@ -197,6 +198,10 @@ class clock:
         start = pi/2
         step = pi/12
         for i in range(24):       # draw the hour ticks as circles
+            if i <= self.hs and i >= self.hr:
+                self.reddefault = "yellow"
+            else:
+                self.reddefault = "#b80000"
             angle =  start-i*step
             x, y = cos(angle),sin(angle)
             self.paintcirclehour(x,y)
@@ -258,7 +263,8 @@ class clock:
         tzinfo = pytz.timezone('America/Bahia'))
         hr , mr , _ = datetime.timetuple(sun_data['sunrise'])[3:6]
         hs , ms , _ = datetime.timetuple(sun_data['sunset'])[3:6]
-        print(hr,mr,' next ',hs,ms)
+        self.hr = hr
+        self.hs = hs
 
 """Main program for testing.
 
