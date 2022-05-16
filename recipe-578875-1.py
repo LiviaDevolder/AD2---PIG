@@ -26,10 +26,10 @@ except ImportError:
 
 class mapper:
     """ Constructor.
-    
+
      @param world window rectangle.
      @param viewport screen rectangle."""
-    
+
     def __init__(self, world, viewport):
         self.world = world
         self.viewport = viewport
@@ -46,21 +46,21 @@ class mapper:
         self.c_2 = Y_c - self.f * y_c
 
     """Maps a single point from world coordinates to viewport (screen) coordinates.
-    
+
     @param x, y given point.
     @return a new point in screen coordinates."""
-    
+
     def __windowToViewport(self, x, y):
         X = self.f *  x + self.c_1
         Y = self.f * -y + self.c_2      # Y axis is upside down
         return X , Y
 
     """ Maps two points from world coordinates to viewport (screen) coordinates.
-    
+
     @param x1, y1 first point.
     @param x2, y2 second point.
     @return two new points in screen coordinates."""
-    
+
     def windowToViewport(self,x1,y1,x2,y2):
         return self.__windowToViewport(x1,y1),self.__windowToViewport(x2,y2)
 
@@ -70,7 +70,7 @@ class makeThread (Thread):
         """Creates a thread.
 
         Constructor.
-        
+
         @param func function to run on this thread."""
 
         def __init__ (self,func):
@@ -83,7 +83,7 @@ class makeThread (Thread):
             if ( self.debug ): print ("Thread end")
 
         """ Starts this thread."""
-        
+
         def run (self):
             if ( self.debug ): print ("Thread begin")
             self.__action()
@@ -159,18 +159,18 @@ class clock:
         self.redraw()             # redraw the clock
 
     """Sets the clock colors."""
-    
+
     def setColors(self):
         if self.showImage:
            self.bgcolor     = 'antique white'
            self.timecolor   = 'dark orange'
            self.circlecolor = 'dark green'
-           self.redhandle   = '#b80000'
+           self.reddefault  = '#b80000'
         else:
            self.bgcolor     = '#000000'
            self.timecolor   = '#ffffff'
            self.circlecolor = '#808080'
-           self.redhandle   = '#b80000'
+           self.reddefault  = '#b80000'
 
     """Toggles the displaying of a background image."""
 
@@ -189,6 +189,12 @@ class clock:
             angle =  start-i*step
             x, y = cos(angle),sin(angle)
             self.paintcircle(x,y)
+        start = pi/2
+        step = pi/12
+        for i in range(24):       # draw the hour ticks as circles
+            angle =  start-i*step
+            x, y = cos(angle),sin(angle)
+            self.paintcirclehour(x,y)
         self.painthms()           # draw the handles
         if not self.showImage:
            self.paintcircle(0,0)  # draw a circle at the centre of the clock
@@ -204,7 +210,7 @@ class clock:
         angle = pi/2 - pi/12 * (h + m/60.0) # pi/2 - 2*pi*(h%24)/24 + 2*pi*m/24/60
         x, y = cos(angle)*0.60,sin(angle)*0.60
         # draw the red handle
-        scl(self.T.windowToViewport(0,0,x,y), fill = self.redhandle, tag=self._ALL, width = self.pad/4)
+        scl(self.T.windowToViewport(0,0,x,y), fill = self.reddefault, tag=self._ALL, width = self.pad/4)
         angle = pi/2 - pi/6 * (h + m/60.0)
         x, y = cos(angle)*0.70,sin(angle)*0.70
         # draw the hour handle
@@ -219,7 +225,7 @@ class clock:
         scl(self.T.windowToViewport(0,0,x,y), fill = self.timecolor, tag=self._ALL, arrow = 'last')
 
     """Draws a circle at a given point.
-    
+
     @param x,y given point."""
 
     def paintcircle(self,x,y):
@@ -227,7 +233,12 @@ class clock:
         sco = self.canvas.create_oval
         sco(self.T.windowToViewport(-ss+x,-ss+y,ss+x,ss+y), fill = self.circlecolor)
 
-    """Animates the clock, by redrawing everything after a certain time interval."""    
+    def paintcirclehour(self,x,y):
+        ss = self.circlesize / 5.0
+        sco = self.canvas.create_oval
+        sco(self.T.windowToViewport(-ss+x,-ss+y,ss+x,ss+y), fill = self.reddefault)
+
+    """Animates the clock, by redrawing everything after a certain time interval."""
 
     def poll(self):
         self.redraw()
