@@ -3,6 +3,10 @@ from time import localtime
 from datetime import timedelta,datetime
 from math import sin, cos, pi
 from threading import Thread
+from astral import *
+from astral.sun import sun
+import pytz
+
 
 try:
     from tkinter import *       # python 3
@@ -128,6 +132,7 @@ class clock:
         self.canvas.bind("<Configure>",self.resize)
         self.root.bind("<KeyPress-i>", self.toggleImage)
         self.canvas.pack(fill=BOTH, expand=YES)
+        self.daylight()
 
         if useThread:
            st=makeThread(self.poll)
@@ -243,6 +248,17 @@ class clock:
     def poll(self):
         self.redraw()
         self.root.after(200,self.poll)
+
+    """Get sunrise and sunset time from location"""
+
+    def daylight(self):
+        today = datetime.date (datetime.now ())
+        city = LocationInfo("Bahia", "Brazil", 'America/Bahia', -23.6, -46.6)
+        sun_data = sun(city.observer, today,
+        tzinfo = pytz.timezone('America/Bahia'))
+        hr , mr , _ = datetime.timetuple(sun_data['sunrise'])[3:6]
+        hs , ms , _ = datetime.timetuple(sun_data['sunset'])[3:6]
+        print(hr,mr,' next ',hs,ms)
 
 """Main program for testing.
 
