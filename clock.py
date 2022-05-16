@@ -133,7 +133,6 @@ class clock:
         self.canvas.bind("<Configure>",self.resize)
         self.root.bind("<KeyPress-i>", self.toggleImage)
         self.canvas.pack(fill=BOTH, expand=YES)
-        self.daylight()
 
         if useThread:
            st=makeThread(self.poll)
@@ -195,10 +194,12 @@ class clock:
             angle =  start-i*step
             x, y = cos(angle),sin(angle)
             self.paintcircle(x,y)
+
         start = pi/2
         step = pi/12
+        hr, hs = self.daylight()
         for i in range(24):       # draw the hour ticks as circles
-            if i <= self.hs and i >= self.hr:
+            if i <= hs and i >= hr: #change circle color if time is between sunset and sunrise
                 self.reddefault = "yellow"
             else:
                 self.reddefault = "#b80000"
@@ -243,6 +244,10 @@ class clock:
         sco = self.canvas.create_oval
         sco(self.T.windowToViewport(-ss+x,-ss+y,ss+x,ss+y), fill = self.circlecolor)
 
+    """Draws a small circle at a given point.
+
+    @param x,y given point."""
+
     def paintcirclehour(self,x,y):
         ss = self.circlesize / 5.0
         sco = self.canvas.create_oval
@@ -263,8 +268,7 @@ class clock:
         tzinfo = pytz.timezone('America/Bahia'))
         hr , mr , _ = datetime.timetuple(sun_data['sunrise'])[3:6]
         hs , ms , _ = datetime.timetuple(sun_data['sunset'])[3:6]
-        self.hr = hr
-        self.hs = hs
+        return hr, hs
 
 """Main program for testing.
 
