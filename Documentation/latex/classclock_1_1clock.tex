@@ -1,0 +1,322 @@
+\hypertarget{classclock_1_1clock}{}\doxysection{clock.\+clock Class Reference}
+\label{classclock_1_1clock}\index{clock.clock@{clock.clock}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_aa08a5547a90bc34e9e68aaa67e2b9615}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classclock_1_1clock_a274f4c9b79c337a303ae3421c0ae4b2f}{root}}, deltahours=0, s\+Image=True, w=400, h=400, use\+Thread=False)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_adf4eaa60e0987a9faf0fa0a3663de9cb}{resize}} (self, event)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_acb48bd36937a03176bfd0b4246360628}{set\+Colors}} (self)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_ad82afdc5d3004298c0644e4f38c85db9}{toggle\+Image}} (self, event)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_a2eece6a7c5196d04f029c485a166aef7}{redraw}} (self)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_a87ac1fec9c79cb32bc69918e4a1b7da7}{paintredhandle}} (self)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_a21fce0abe37648e46e645ac86402b273}{painthms}} (self)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_a7c8dfdbfe2d5c40e487d926801a7e259}{paintcircle}} (self, x, y)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_aa8ea2e9a170ad3d8e6ed53128053d1f8}{paintcirclehour}} (self, x, y)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_a80fc5bad2339117579c3812dd3bc53c2}{createdictionary}} (self)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_a10ff2ef6ec28a40f391d0261a5572f02}{changetimestamp}} (self)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_a6d91eb551308729f7d93eae9a3e88079}{showtimestamp}} (self)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_afec1c5090f2e5c155d91a1717716cd22}{drawbutton}} (self)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_a4b28551047e9d724ddabc43b21944c72}{poll}} (self)
+\item 
+def \mbox{\hyperlink{classclock_1_1clock_a18b6c5055d29f7bf0cb9ae52a3f3394a}{daylight}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_afbe41312a9b73f03dda12fdf51c3b538}{index}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_ab3c1e236e76c76b5cbc74710c45f80c5}{world}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a0a622827f88588f81343e575db305982}{img\+Path}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a7a1d7c6e724c2f5971fa96017d39dcbc}{show\+Image}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a963c9dcb930888b3b8302ab70b4ec3af}{circlesize}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a274f4c9b79c337a303ae3421c0ae4b2f}{root}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a302f1f3dc93085f622a4b3337a5b00cb}{pad}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a413ba22c2be5b1a947a5d20d7a82a283}{flu\+Img}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a4f21e191979eda44a690548a837c3b62}{delta}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a3eb768d50780ffdc9ef4b18c8ffbe850}{canvas}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a952aed306315eafe90cd35b6b652667d}{T}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a1bd2ff501d32b81c04c405028300c596}{flu}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a6fcbc32fa46222571426ab9e67762d88}{bgcolor}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a951910eb861e6bc42541aa1916fae339}{timecolor}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a9715b1ec49519f050d2b08b49cc72a2f}{circlecolor}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_ae4133b6324b56ddf00963bbdd3254e40}{reddefault}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_a000db96d846ed38b29d61dc2399f0567}{data}}
+\item 
+\mbox{\hyperlink{classclock_1_1clock_afc787bf5b4cc7ed9cae9a661b1eee067}{lbl}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Class for drawing a simple analog clock.
+The image path is hardcoded, you can pick whatever you like. 
+Currently we're just using a background color\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classclock_1_1clock_aa08a5547a90bc34e9e68aaa67e2b9615}\label{classclock_1_1clock_aa08a5547a90bc34e9e68aaa67e2b9615}} 
+\index{clock.clock@{clock.clock}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def clock.\+clock.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{root,  }\item[{}]{deltahours = {\ttfamily 0},  }\item[{}]{s\+Image = {\ttfamily True},  }\item[{}]{w = {\ttfamily 400},  }\item[{}]{h = {\ttfamily 400},  }\item[{}]{use\+Thread = {\ttfamily False} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Constructor.
+
+@param deltahours time zone.
+@param sImage whether to use a background image.
+@param w canvas width.
+@param h canvas height.
+@param useThread whether to use a separate thread for running the clock.\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classclock_1_1clock_a10ff2ef6ec28a40f391d0261a5572f02}\label{classclock_1_1clock_a10ff2ef6ec28a40f391d0261a5572f02}} 
+\index{clock.clock@{clock.clock}!changetimestamp@{changetimestamp}}
+\index{changetimestamp@{changetimestamp}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{changetimestamp()}{changetimestamp()}}
+{\footnotesize\ttfamily def clock.\+clock.\+changetimestamp (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Change timestamp according to localtime.json.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classclock_1_1clock_a80fc5bad2339117579c3812dd3bc53c2}\label{classclock_1_1clock_a80fc5bad2339117579c3812dd3bc53c2}} 
+\index{clock.clock@{clock.clock}!createdictionary@{createdictionary}}
+\index{createdictionary@{createdictionary}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{createdictionary()}{createdictionary()}}
+{\footnotesize\ttfamily def clock.\+clock.\+createdictionary (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Create dictionary with localtime.json.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classclock_1_1clock_a18b6c5055d29f7bf0cb9ae52a3f3394a}\label{classclock_1_1clock_a18b6c5055d29f7bf0cb9ae52a3f3394a}} 
+\index{clock.clock@{clock.clock}!daylight@{daylight}}
+\index{daylight@{daylight}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{daylight()}{daylight()}}
+{\footnotesize\ttfamily def clock.\+clock.\+daylight (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Get sunrise and sunset time from main location\end{DoxyVerb}
+ \mbox{\Hypertarget{classclock_1_1clock_afec1c5090f2e5c155d91a1717716cd22}\label{classclock_1_1clock_afec1c5090f2e5c155d91a1717716cd22}} 
+\index{clock.clock@{clock.clock}!drawbutton@{drawbutton}}
+\index{drawbutton@{drawbutton}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{drawbutton()}{drawbutton()}}
+{\footnotesize\ttfamily def clock.\+clock.\+drawbutton (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Draws the button at the top side of the canvas.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classclock_1_1clock_a7c8dfdbfe2d5c40e487d926801a7e259}\label{classclock_1_1clock_a7c8dfdbfe2d5c40e487d926801a7e259}} 
+\index{clock.clock@{clock.clock}!paintcircle@{paintcircle}}
+\index{paintcircle@{paintcircle}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{paintcircle()}{paintcircle()}}
+{\footnotesize\ttfamily def clock.\+clock.\+paintcircle (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{x,  }\item[{}]{y }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Draws a circle at a given point.
+
+@param x,y given point.\end{DoxyVerb}
+ \mbox{\Hypertarget{classclock_1_1clock_aa8ea2e9a170ad3d8e6ed53128053d1f8}\label{classclock_1_1clock_aa8ea2e9a170ad3d8e6ed53128053d1f8}} 
+\index{clock.clock@{clock.clock}!paintcirclehour@{paintcirclehour}}
+\index{paintcirclehour@{paintcirclehour}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{paintcirclehour()}{paintcirclehour()}}
+{\footnotesize\ttfamily def clock.\+clock.\+paintcirclehour (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{x,  }\item[{}]{y }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Draws a small circle at a given point.
+
+@param x,y given point.\end{DoxyVerb}
+ \mbox{\Hypertarget{classclock_1_1clock_a21fce0abe37648e46e645ac86402b273}\label{classclock_1_1clock_a21fce0abe37648e46e645ac86402b273}} 
+\index{clock.clock@{clock.clock}!painthms@{painthms}}
+\index{painthms@{painthms}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{painthms()}{painthms()}}
+{\footnotesize\ttfamily def clock.\+clock.\+painthms (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Draws the handles.\end{DoxyVerb}
+ \mbox{\Hypertarget{classclock_1_1clock_a87ac1fec9c79cb32bc69918e4a1b7da7}\label{classclock_1_1clock_a87ac1fec9c79cb32bc69918e4a1b7da7}} 
+\index{clock.clock@{clock.clock}!paintredhandle@{paintredhandle}}
+\index{paintredhandle@{paintredhandle}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{paintredhandle()}{paintredhandle()}}
+{\footnotesize\ttfamily def clock.\+clock.\+paintredhandle (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Paint red handle that moves according to timezone.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classclock_1_1clock_a4b28551047e9d724ddabc43b21944c72}\label{classclock_1_1clock_a4b28551047e9d724ddabc43b21944c72}} 
+\index{clock.clock@{clock.clock}!poll@{poll}}
+\index{poll@{poll}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{poll()}{poll()}}
+{\footnotesize\ttfamily def clock.\+clock.\+poll (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Animates the clock, by redrawing everything after a certain time interval.\end{DoxyVerb}
+ \mbox{\Hypertarget{classclock_1_1clock_a2eece6a7c5196d04f029c485a166aef7}\label{classclock_1_1clock_a2eece6a7c5196d04f029c485a166aef7}} 
+\index{clock.clock@{clock.clock}!redraw@{redraw}}
+\index{redraw@{redraw}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{redraw()}{redraw()}}
+{\footnotesize\ttfamily def clock.\+clock.\+redraw (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Redraws the whole clock.\end{DoxyVerb}
+ \mbox{\Hypertarget{classclock_1_1clock_adf4eaa60e0987a9faf0fa0a3663de9cb}\label{classclock_1_1clock_adf4eaa60e0987a9faf0fa0a3663de9cb}} 
+\index{clock.clock@{clock.clock}!resize@{resize}}
+\index{resize@{resize}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{resize()}{resize()}}
+{\footnotesize\ttfamily def clock.\+clock.\+resize (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{event }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Called when the window changes, by means of a user input.\end{DoxyVerb}
+ \mbox{\Hypertarget{classclock_1_1clock_acb48bd36937a03176bfd0b4246360628}\label{classclock_1_1clock_acb48bd36937a03176bfd0b4246360628}} 
+\index{clock.clock@{clock.clock}!setColors@{setColors}}
+\index{setColors@{setColors}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{setColors()}{setColors()}}
+{\footnotesize\ttfamily def clock.\+clock.\+set\+Colors (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Sets the clock colors.\end{DoxyVerb}
+ \mbox{\Hypertarget{classclock_1_1clock_a6d91eb551308729f7d93eae9a3e88079}\label{classclock_1_1clock_a6d91eb551308729f7d93eae9a3e88079}} 
+\index{clock.clock@{clock.clock}!showtimestamp@{showtimestamp}}
+\index{showtimestamp@{showtimestamp}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{showtimestamp()}{showtimestamp()}}
+{\footnotesize\ttfamily def clock.\+clock.\+showtimestamp (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Show label with timezone info.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classclock_1_1clock_ad82afdc5d3004298c0644e4f38c85db9}\label{classclock_1_1clock_ad82afdc5d3004298c0644e4f38c85db9}} 
+\index{clock.clock@{clock.clock}!toggleImage@{toggleImage}}
+\index{toggleImage@{toggleImage}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{toggleImage()}{toggleImage()}}
+{\footnotesize\ttfamily def clock.\+clock.\+toggle\+Image (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{event }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Toggles the displaying of a background image.\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classclock_1_1clock_a6fcbc32fa46222571426ab9e67762d88}\label{classclock_1_1clock_a6fcbc32fa46222571426ab9e67762d88}} 
+\index{clock.clock@{clock.clock}!bgcolor@{bgcolor}}
+\index{bgcolor@{bgcolor}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{bgcolor}{bgcolor}}
+{\footnotesize\ttfamily clock.\+clock.\+bgcolor}
+
+\mbox{\Hypertarget{classclock_1_1clock_a3eb768d50780ffdc9ef4b18c8ffbe850}\label{classclock_1_1clock_a3eb768d50780ffdc9ef4b18c8ffbe850}} 
+\index{clock.clock@{clock.clock}!canvas@{canvas}}
+\index{canvas@{canvas}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{canvas}{canvas}}
+{\footnotesize\ttfamily clock.\+clock.\+canvas}
+
+\mbox{\Hypertarget{classclock_1_1clock_a9715b1ec49519f050d2b08b49cc72a2f}\label{classclock_1_1clock_a9715b1ec49519f050d2b08b49cc72a2f}} 
+\index{clock.clock@{clock.clock}!circlecolor@{circlecolor}}
+\index{circlecolor@{circlecolor}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{circlecolor}{circlecolor}}
+{\footnotesize\ttfamily clock.\+clock.\+circlecolor}
+
+\mbox{\Hypertarget{classclock_1_1clock_a963c9dcb930888b3b8302ab70b4ec3af}\label{classclock_1_1clock_a963c9dcb930888b3b8302ab70b4ec3af}} 
+\index{clock.clock@{clock.clock}!circlesize@{circlesize}}
+\index{circlesize@{circlesize}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{circlesize}{circlesize}}
+{\footnotesize\ttfamily clock.\+clock.\+circlesize}
+
+\mbox{\Hypertarget{classclock_1_1clock_a000db96d846ed38b29d61dc2399f0567}\label{classclock_1_1clock_a000db96d846ed38b29d61dc2399f0567}} 
+\index{clock.clock@{clock.clock}!data@{data}}
+\index{data@{data}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily clock.\+clock.\+data}
+
+\mbox{\Hypertarget{classclock_1_1clock_a4f21e191979eda44a690548a837c3b62}\label{classclock_1_1clock_a4f21e191979eda44a690548a837c3b62}} 
+\index{clock.clock@{clock.clock}!delta@{delta}}
+\index{delta@{delta}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{delta}{delta}}
+{\footnotesize\ttfamily clock.\+clock.\+delta}
+
+\mbox{\Hypertarget{classclock_1_1clock_a1bd2ff501d32b81c04c405028300c596}\label{classclock_1_1clock_a1bd2ff501d32b81c04c405028300c596}} 
+\index{clock.clock@{clock.clock}!flu@{flu}}
+\index{flu@{flu}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{flu}{flu}}
+{\footnotesize\ttfamily clock.\+clock.\+flu}
+
+\mbox{\Hypertarget{classclock_1_1clock_a413ba22c2be5b1a947a5d20d7a82a283}\label{classclock_1_1clock_a413ba22c2be5b1a947a5d20d7a82a283}} 
+\index{clock.clock@{clock.clock}!fluImg@{fluImg}}
+\index{fluImg@{fluImg}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{fluImg}{fluImg}}
+{\footnotesize\ttfamily clock.\+clock.\+flu\+Img}
+
+\mbox{\Hypertarget{classclock_1_1clock_a0a622827f88588f81343e575db305982}\label{classclock_1_1clock_a0a622827f88588f81343e575db305982}} 
+\index{clock.clock@{clock.clock}!imgPath@{imgPath}}
+\index{imgPath@{imgPath}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{imgPath}{imgPath}}
+{\footnotesize\ttfamily clock.\+clock.\+img\+Path}
+
+\mbox{\Hypertarget{classclock_1_1clock_afbe41312a9b73f03dda12fdf51c3b538}\label{classclock_1_1clock_afbe41312a9b73f03dda12fdf51c3b538}} 
+\index{clock.clock@{clock.clock}!index@{index}}
+\index{index@{index}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{index}{index}}
+{\footnotesize\ttfamily clock.\+clock.\+index}
+
+\mbox{\Hypertarget{classclock_1_1clock_afc787bf5b4cc7ed9cae9a661b1eee067}\label{classclock_1_1clock_afc787bf5b4cc7ed9cae9a661b1eee067}} 
+\index{clock.clock@{clock.clock}!lbl@{lbl}}
+\index{lbl@{lbl}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{lbl}{lbl}}
+{\footnotesize\ttfamily clock.\+clock.\+lbl}
+
+\mbox{\Hypertarget{classclock_1_1clock_a302f1f3dc93085f622a4b3337a5b00cb}\label{classclock_1_1clock_a302f1f3dc93085f622a4b3337a5b00cb}} 
+\index{clock.clock@{clock.clock}!pad@{pad}}
+\index{pad@{pad}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{pad}{pad}}
+{\footnotesize\ttfamily clock.\+clock.\+pad}
+
+\mbox{\Hypertarget{classclock_1_1clock_ae4133b6324b56ddf00963bbdd3254e40}\label{classclock_1_1clock_ae4133b6324b56ddf00963bbdd3254e40}} 
+\index{clock.clock@{clock.clock}!reddefault@{reddefault}}
+\index{reddefault@{reddefault}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{reddefault}{reddefault}}
+{\footnotesize\ttfamily clock.\+clock.\+reddefault}
+
+\mbox{\Hypertarget{classclock_1_1clock_a274f4c9b79c337a303ae3421c0ae4b2f}\label{classclock_1_1clock_a274f4c9b79c337a303ae3421c0ae4b2f}} 
+\index{clock.clock@{clock.clock}!root@{root}}
+\index{root@{root}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{root}{root}}
+{\footnotesize\ttfamily clock.\+clock.\+root}
+
+\mbox{\Hypertarget{classclock_1_1clock_a7a1d7c6e724c2f5971fa96017d39dcbc}\label{classclock_1_1clock_a7a1d7c6e724c2f5971fa96017d39dcbc}} 
+\index{clock.clock@{clock.clock}!showImage@{showImage}}
+\index{showImage@{showImage}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{showImage}{showImage}}
+{\footnotesize\ttfamily clock.\+clock.\+show\+Image}
+
+\mbox{\Hypertarget{classclock_1_1clock_a952aed306315eafe90cd35b6b652667d}\label{classclock_1_1clock_a952aed306315eafe90cd35b6b652667d}} 
+\index{clock.clock@{clock.clock}!T@{T}}
+\index{T@{T}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{T}{T}}
+{\footnotesize\ttfamily clock.\+clock.\+T}
+
+\mbox{\Hypertarget{classclock_1_1clock_a951910eb861e6bc42541aa1916fae339}\label{classclock_1_1clock_a951910eb861e6bc42541aa1916fae339}} 
+\index{clock.clock@{clock.clock}!timecolor@{timecolor}}
+\index{timecolor@{timecolor}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{timecolor}{timecolor}}
+{\footnotesize\ttfamily clock.\+clock.\+timecolor}
+
+\mbox{\Hypertarget{classclock_1_1clock_ab3c1e236e76c76b5cbc74710c45f80c5}\label{classclock_1_1clock_ab3c1e236e76c76b5cbc74710c45f80c5}} 
+\index{clock.clock@{clock.clock}!world@{world}}
+\index{world@{world}!clock.clock@{clock.clock}}
+\doxysubsubsection{\texorpdfstring{world}{world}}
+{\footnotesize\ttfamily clock.\+clock.\+world}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{clock_8py}{clock.\+py}}\end{DoxyCompactItemize}
