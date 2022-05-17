@@ -255,8 +255,6 @@ class clock:
         sco = self.canvas.create_oval
         sco(self.T.windowToViewport(-ss+x,-ss+y,ss+x,ss+y), fill = self.circlecolor)
 
-
-
     def paintcirclehour(self,x,y):
         """Draws a small circle at a given point.
 
@@ -284,8 +282,7 @@ class clock:
         hr , mr , _ = datetime.timetuple(sun_data['sunrise'])[3:6]
         hs , ms , _ = datetime.timetuple(sun_data['sunset'])[3:6]
         return hr, hs
-
-
+        
 def main(argv=None):
     """Main program for testing.
 
