@@ -1,12 +1,15 @@
 from ast import If
 import sys, types, os
+import tkinter
 from time import localtime
 from datetime import timedelta,datetime
 from math import sin, cos, pi
 from threading import Thread
+from typing_extensions import Self
 from astral import *
 from astral.sun import sun
 import pytz
+import json
 
 
 try:
@@ -107,6 +110,9 @@ class clock:
     @param useThread whether to use a separate thread for running the clock."""
 
     def __init__(self,root,deltahours = 0,sImage = True,w = 400,h = 400,useThread = False):
+        self.index = 0
+        self.createdictionary()
+
         self.world       = [-1,-1,1,1]
         self.imgPath     = './images/fluminense.png'  # image path
         if hasPIL and os.path.exists (self.imgPath):
@@ -132,6 +138,7 @@ class clock:
         self.root.title('Clock')
         self.canvas.bind("<Configure>",self.resize)
         self.root.bind("<KeyPress-i>", self.toggleImage)
+        self.drawbutton()
         self.canvas.pack(fill=BOTH, expand=YES)
 
         if useThread:
@@ -200,7 +207,7 @@ class clock:
         hr, hs = self.daylight()
         for i in range(24):       # draw the hour ticks as circles
             if i <= hs and i >= hr: #change circle color if time is between sunset and sunrise
-                self.reddefault = "yellow"
+                self.reddefault = "dark orange"
             else:
                 self.reddefault = "#b80000"
             angle =  start-i*step
@@ -253,6 +260,24 @@ class clock:
         sco = self.canvas.create_oval
         sco(self.T.windowToViewport(-ss+x,-ss+y,ss+x,ss+y), fill = self.reddefault)
 
+    def createdictionary(self):
+        with open('localtime.json', encoding='utf-8') as localtime:
+            self.data = json.load(localtime)
+            self.takedata()
+
+    def changetimestamp(self):
+        self.index = self.index + 1
+        self.takedata()
+
+    def takedata(self):
+        print(self.data['cities'][self.index])
+
+    """Draws the button at the right side of the canvas
+
+    """
+    def drawbutton(self):
+        tkinter.Button(self.canvas, text="Change UTC", command=self.changetimestamp).pack()
+
     """Animates the clock, by redrawing everything after a certain time interval."""
 
     def poll(self):
@@ -269,6 +294,7 @@ class clock:
         hr , mr , _ = datetime.timetuple(sun_data['sunrise'])[3:6]
         hs , ms , _ = datetime.timetuple(sun_data['sunset'])[3:6]
         return hr, hs
+
 
 """Main program for testing.
 
