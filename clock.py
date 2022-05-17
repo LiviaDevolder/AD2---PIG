@@ -26,16 +26,16 @@ try:
 except ImportError:
     hasPIL = False
 
-""" Class for handling the mapping from window coordinates
+class mapper:
+    """ Class for handling the mapping from window coordinates
   to viewport coordinates."""
 
-class mapper:
-    """ Constructor.
-
-     @param world window rectangle.
-     @param viewport screen rectangle."""
-
     def __init__(self, world, viewport):
+        """ Constructor.
+
+        @param world window rectangle.
+        @param viewport screen rectangle."""
+
         self.world = world
         self.viewport = viewport
         x_min, y_min, x_max, y_max = self.world
@@ -50,65 +50,69 @@ class mapper:
         self.c_1 = X_c - self.f * x_c
         self.c_2 = Y_c - self.f * y_c
 
-    """Maps a single point from world coordinates to viewport (screen) coordinates.
-
-    @param x, y given point.
-    @return a new point in screen coordinates."""
-
     def __windowToViewport(self, x, y):
+        """Maps a single point from world coordinates to viewport (screen) coordinates.
+
+        @param x, y given point.
+        @return a new point in screen coordinates."""
+
         X = self.f *  x + self.c_1
         Y = self.f * -y + self.c_2      # Y axis is upside down
         return X , Y
 
-    """ Maps two points from world coordinates to viewport (screen) coordinates.
-
-    @param x1, y1 first point.
-    @param x2, y2 second point.
-    @return two new points in screen coordinates."""
-
     def windowToViewport(self,x1,y1,x2,y2):
+        """ Maps two points from world coordinates to viewport (screen) coordinates.
+
+        @param x1, y1 first point.
+        @param x2, y2 second point.
+        @return two new points in screen coordinates."""
+
         return self.__windowToViewport(x1,y1),self.__windowToViewport(x2,y2)
 
-""" Class for creating a new thread. """
-
 class makeThread (Thread):
+
+    """ Class for creating a new thread. """
+
+    def __init__ (self,func):
         """Creates a thread.
 
         Constructor.
 
         @param func function to run on this thread."""
 
-        def __init__ (self,func):
-            Thread.__init__(self)
-            self.__action = func
-            self.debug = False
+        Thread.__init__(self)
+        self.__action = func
+        self.debug = False
 
+    def __del__ (self):
         """Destructor """
-        def __del__ (self):
-            if ( self.debug ): print ("Thread end")
 
+        if ( self.debug ): print ("Thread end")
+
+
+    def run (self):
         """ Starts this thread."""
+        
+        if ( self.debug ): print ("Thread begin")
+        self.__action()
 
-        def run (self):
-            if ( self.debug ): print ("Thread begin")
-            self.__action()
-
-"""Class for drawing a simple analog clock.
- The backgroung image may be changed by pressing key 'i'.
- The image path is hardcoded. It should be available in directory 'images'."""
 
 class clock:
-    """Constructor.
-
-    @param deltahours time zone.
-    @param sImage whether to use a background image.
-    @param w canvas width.
-    @param h canvas height.
-    @param useThread whether to use a separate thread for running the clock."""
+    """Class for drawing a simple analog clock.
+    The image path is hardcoded, you can pick whatever you like. 
+    Currently we're just using a background color"""
 
     def __init__(self,root,deltahours = 0,sImage = True,w = 400,h = 400,useThread = False):
+        """Constructor.
+
+        @param deltahours time zone.
+        @param sImage whether to use a background image.
+        @param w canvas width.
+        @param h canvas height.
+        @param useThread whether to use a separate thread for running the clock."""
+
         self.world       = [-1,-1,1,1]
-        self.imgPath     = './images/fluminense.png'  # image path
+        self.imgPath     = ''  # image path
         if hasPIL and os.path.exists (self.imgPath):
            self.showImage = sImage
         else:
@@ -133,7 +137,6 @@ class clock:
         self.canvas.bind("<Configure>",self.resize)
         self.root.bind("<KeyPress-i>", self.toggleImage)
         self.canvas.pack(fill=BOTH, expand=YES)
-        self.daylight()
 
         if useThread:
            st=makeThread(self.poll)
@@ -142,9 +145,9 @@ class clock:
         else:
            self.poll()
 
-    """Called when the window changes, by means of a user input."""
-
     def resize(self,event):
+        """Called when the window changes, by means of a user input."""
+
         sc = self.canvas
         sc.delete(ALL)            # erase the whole canvas
         width  = sc.winfo_width()
@@ -164,9 +167,10 @@ class clock:
 
         self.redraw()             # redraw the clock
 
-    """Sets the clock colors."""
 
     def setColors(self):
+        """Sets the clock colors."""
+
         if self.showImage:
            self.bgcolor     = 'antique white'
            self.timecolor   = 'dark orange'
@@ -178,27 +182,31 @@ class clock:
            self.circlecolor = '#808080'
            self.reddefault  = '#b80000'
 
-    """Toggles the displaying of a background image."""
+    
 
     def toggleImage(self,event):
+        """Toggles the displaying of a background image."""
+
         if hasPIL and os.path.exists (self.imgPath):
            self.showImage = not self.showImage
            self.setColors()
            self.resize(event)
 
-    """Redraws the whole clock."""
-
     def redraw(self):
+        """Redraws the whole clock."""
+
         start = pi/2              # 12h is at pi/2
         step = pi/6
         for i in range(12):       # draw the minute ticks as circles
             angle =  start-i*step
             x, y = cos(angle),sin(angle)
             self.paintcircle(x,y)
+
         start = pi/2
         step = pi/12
+        hr, hs = self.daylight()
         for i in range(24):       # draw the hour ticks as circles
-            if i <= self.hs and i >= self.hr:
+            if i <= hs and i >= hr: #change circle color if time is between sunset and sunrise
                 self.reddefault = "yellow"
             else:
                 self.reddefault = "#b80000"
@@ -209,9 +217,11 @@ class clock:
         if not self.showImage:
            self.paintcircle(0,0)  # draw a circle at the centre of the clock
 
-    """Draws the handles."""
+    
 
     def painthms(self):
+        """Draws the handles."""
+
         self.canvas.delete(self._ALL)  # delete the handles
         T = datetime.timetuple(datetime.utcnow()-self.delta)
         x,x,x,h,m,s,x,x,x = T
@@ -234,44 +244,54 @@ class clock:
         # draw the second handle
         scl(self.T.windowToViewport(0,0,x,y), fill = self.timecolor, tag=self._ALL, arrow = 'last')
 
-    """Draws a circle at a given point.
 
-    @param x,y given point."""
 
     def paintcircle(self,x,y):
+        """Draws a circle at a given point.
+
+        @param x,y given point."""
+
         ss = self.circlesize / 2.0
         sco = self.canvas.create_oval
         sco(self.T.windowToViewport(-ss+x,-ss+y,ss+x,ss+y), fill = self.circlecolor)
 
+
+
     def paintcirclehour(self,x,y):
+        """Draws a small circle at a given point.
+
+        @param x,y given point."""
+
         ss = self.circlesize / 5.0
         sco = self.canvas.create_oval
         sco(self.T.windowToViewport(-ss+x,-ss+y,ss+x,ss+y), fill = self.reddefault)
 
-    """Animates the clock, by redrawing everything after a certain time interval."""
-
+    
     def poll(self):
+        """Animates the clock, by redrawing everything after a certain time interval."""
+
         self.redraw()
         self.root.after(200,self.poll)
 
-    """Get sunrise and sunset time from location"""
-
+    
     def daylight(self):
+        """Get sunrise and sunset time from main location"""
+
         today = datetime.date (datetime.now ())
-        city = LocationInfo("Bahia", "Brazil", 'America/Bahia', -23.6, -46.6)
+        city = LocationInfo("Manaus", "Brazil", 'America/Manaus', -23.6, -46.6)
         sun_data = sun(city.observer, today,
-        tzinfo = pytz.timezone('America/Bahia'))
+        tzinfo = pytz.timezone('America/Manaus'))
         hr , mr , _ = datetime.timetuple(sun_data['sunrise'])[3:6]
         hs , ms , _ = datetime.timetuple(sun_data['sunset'])[3:6]
-        self.hr = hr
-        self.hs = hs
+        return hr, hs
 
-"""Main program for testing.
-
- @param argv time zone, image background flag,
-        clock width, clock height, create thread flag."""
 
 def main(argv=None):
+    """Main program for testing.
+
+    @param argv time zone, image background flag,
+            clock width, clock height, create thread flag."""
+
     if argv is None:
        argv = sys.argv
     if len(argv) > 2:
