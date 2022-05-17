@@ -241,9 +241,9 @@ class clock:
         # draw the red handle
         scl(self.T.windowToViewport(0,0,x,y), fill = self.reddefault, tag=self._ALL, width = self.pad/4)
 
-    """Draws the handles."""
-
     def painthms(self):
+        """Draws the handles."""
+
         T = datetime.timetuple(datetime.utcnow()-self.delta)
         x,x,x,h,m,s,x,x,x = T
         self.root.title('%02i:%02i:%02i' %(h,m,s))
@@ -260,7 +260,6 @@ class clock:
         x, y = cos(angle)*0.95,sin(angle)*0.95
         # draw the second handle
         scl(self.T.windowToViewport(0,0,x,y), fill = self.timecolor, tag=self._ALL, arrow = 'last')
-
 
 
     def paintcircle(self,x,y):
@@ -311,8 +310,6 @@ class clock:
         Draws the button at the top side of the canvas.
         """
         tkinter.Button(self.root, text="Change UTC", command=self.changetimestamp).pack()
-
-    """Animates the clock, by redrawing everything after a certain time interval."""
 
     def poll(self):
         """Animates the clock, by redrawing everything after a certain time interval."""
