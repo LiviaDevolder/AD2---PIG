@@ -140,6 +140,7 @@ class clock:
         self.root.bind("<KeyPress-i>", self.toggleImage)
         self.drawbutton()
         self.canvas.pack(fill=BOTH, expand=YES)
+        self.showtimestamp()
 
         if useThread:
            st=makeThread(self.poll)
@@ -213,22 +214,34 @@ class clock:
             angle =  start-i*step
             x, y = cos(angle),sin(angle)
             self.paintcirclehour(x,y)
+        self.paintredhandle()
         self.painthms()           # draw the handles
         if not self.showImage:
            self.paintcircle(0,0)  # draw a circle at the centre of the clock
 
+    def paintredhandle(self):
+        """
+        Paint red handle that moves according to timezone.
+        """
+        self.canvas.delete(self._ALL)
+        # d = datetime.now()
+        timezone = pytz.timezone(f"{self.data['cities'][self.index]['region']}/{self.data['cities'][self.index]['city']}")
+        d_aware = datetime.now(timezone)
+        T = datetime.timetuple(d_aware-self.delta)
+        x,x,x,h,m,s,x,x,x = T
+        scl = self.canvas.create_line
+        angle = pi/2 - pi/12 * (h + m/60.0)
+        x, y = cos(angle)*0.60,sin(angle)*0.60
+        # draw the red handle
+        scl(self.T.windowToViewport(0,0,x,y), fill = self.reddefault, tag=self._ALL, width = self.pad/4)
+
     """Draws the handles."""
 
     def painthms(self):
-        self.canvas.delete(self._ALL)  # delete the handles
         T = datetime.timetuple(datetime.utcnow()-self.delta)
         x,x,x,h,m,s,x,x,x = T
         self.root.title('%02i:%02i:%02i' %(h,m,s))
         scl = self.canvas.create_line
-        angle = pi/2 - pi/12 * (h + m/60.0) # pi/2 - 2*pi*(h%24)/24 + 2*pi*m/24/60
-        x, y = cos(angle)*0.60,sin(angle)*0.60
-        # draw the red handle
-        scl(self.T.windowToViewport(0,0,x,y), fill = self.reddefault, tag=self._ALL, width = self.pad/4)
         angle = pi/2 - pi/6 * (h + m/60.0)
         x, y = cos(angle)*0.70,sin(angle)*0.70
         # draw the hour handle
@@ -261,22 +274,35 @@ class clock:
         sco(self.T.windowToViewport(-ss+x,-ss+y,ss+x,ss+y), fill = self.reddefault)
 
     def createdictionary(self):
+        """
+        Create dictionary with localtime.json.
+        """
         with open('localtime.json', encoding='utf-8') as localtime:
             self.data = json.load(localtime)
-            self.takedata()
 
     def changetimestamp(self):
-        self.index = self.index + 1
-        self.takedata()
+        """
+        Change timestamp according to localtime.json.
+        """
+        if self.index < 19:
+            self.index = self.index + 1
+        else:
+            self.index = 0
+        self.lbl.destroy()
+        self.showtimestamp()
 
-    def takedata(self):
-        print(self.data['cities'][self.index])
+    def showtimestamp(self):
+        """
+        Show label with timezone info.
+        """
+        self.lbl = Label(self.root, text=f"{self.data['cities'][self.index]['city']}/{self.data['cities'][self.index]['region']} - UTC {self.data['cities'][self.index]['offset']}", font=('Helvetica 12 bold'))
+        self.lbl.pack()
 
-    """Draws the button at the right side of the canvas
-
-    """
     def drawbutton(self):
-        tkinter.Button(self.canvas, text="Change UTC", command=self.changetimestamp).pack()
+        """
+        Draws the button at the top side of the canvas.
+        """
+        tkinter.Button(self.root, text="Change UTC", command=self.changetimestamp).pack()
 
     """Animates the clock, by redrawing everything after a certain time interval."""
 
@@ -288,7 +314,7 @@ class clock:
 
     def daylight(self):
         today = datetime.date (datetime.now ())
-        city = LocationInfo("Bahia", "Brazil", 'America/Bahia', -23.6, -46.6)
+        city = LocationInfo(self.data['cities'][self.index]['city'], self.data['cities'][self.index]['region'], f"{self.data['cities'][self.index]['region']}/{self.data['cities'][self.index]['city']}", self.data['cities'][self.index]['coordinates']['latitude'], self.data['cities'][self.index]['coordinates']['longitude'])
         sun_data = sun(city.observer, today,
         tzinfo = pytz.timezone('America/Bahia'))
         hr , mr , _ = datetime.timetuple(sun_data['sunrise'])[3:6]

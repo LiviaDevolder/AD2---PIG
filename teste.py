@@ -1,8 +1,5 @@
-import tkinter
+from geopy.geocoders import Nominatim
 
-top = tkinter.Tk()
-
-B = tkinter.Button(top, text ="Hello")
-
-B.pack()
-top.mainloop()
+geoLoc = Nominatim(user_agent="GetLoc")
+locname = geoLoc.reverse("-3.853808, -32.423786")
+print(locname.address)
