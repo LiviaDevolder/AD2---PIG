@@ -1,12 +1,15 @@
 from ast import If
 import sys, types, os
+import tkinter
 from time import localtime
 from datetime import timedelta,datetime
 from math import sin, cos, pi
 from threading import Thread
+from typing_extensions import Self
 from astral import *
 from astral.sun import sun
 import pytz
+import json
 
 
 try:
@@ -110,6 +113,8 @@ class clock:
         @param w canvas width.
         @param h canvas height.
         @param useThread whether to use a separate thread for running the clock."""
+        self.index = 0
+        self.createdictionary()
 
         self.world       = [-1,-1,1,1]
         self.imgPath     = ''  # image path
@@ -136,7 +141,9 @@ class clock:
         self.root.title('Clock')
         self.canvas.bind("<Configure>",self.resize)
         self.root.bind("<KeyPress-i>", self.toggleImage)
+        self.drawbutton()
         self.canvas.pack(fill=BOTH, expand=YES)
+        self.showtimestamp()
 
         if useThread:
            st=makeThread(self.poll)
@@ -207,30 +214,40 @@ class clock:
         hr, hs = self.daylight()
         for i in range(24):       # draw the hour ticks as circles
             if i <= hs and i >= hr: #change circle color if time is between sunset and sunrise
-                self.reddefault = "yellow"
+                self.reddefault = "dark orange"
             else:
                 self.reddefault = "#b80000"
             angle =  start-i*step
             x, y = cos(angle),sin(angle)
             self.paintcirclehour(x,y)
+        self.paintredhandle()
         self.painthms()           # draw the handles
         if not self.showImage:
            self.paintcircle(0,0)  # draw a circle at the centre of the clock
 
-    
+    def paintredhandle(self):
+        """
+        Paint red handle that moves according to timezone.
+        """
+        self.canvas.delete(self._ALL)
+        # d = datetime.now()
+        timezone = pytz.timezone(f"{self.data['cities'][self.index]['region']}/{self.data['cities'][self.index]['city']}")
+        d_aware = datetime.now(timezone)
+        T = datetime.timetuple(d_aware-self.delta)
+        x,x,x,h,m,s,x,x,x = T
+        scl = self.canvas.create_line
+        angle = pi/2 - pi/12 * (h + m/60.0)
+        x, y = cos(angle)*0.60,sin(angle)*0.60
+        # draw the red handle
+        scl(self.T.windowToViewport(0,0,x,y), fill = self.reddefault, tag=self._ALL, width = self.pad/4)
+
+    """Draws the handles."""
 
     def painthms(self):
-        """Draws the handles."""
-
-        self.canvas.delete(self._ALL)  # delete the handles
         T = datetime.timetuple(datetime.utcnow()-self.delta)
         x,x,x,h,m,s,x,x,x = T
         self.root.title('%02i:%02i:%02i' %(h,m,s))
         scl = self.canvas.create_line
-        angle = pi/2 - pi/12 * (h + m/60.0) # pi/2 - 2*pi*(h%24)/24 + 2*pi*m/24/60
-        x, y = cos(angle)*0.60,sin(angle)*0.60
-        # draw the red handle
-        scl(self.T.windowToViewport(0,0,x,y), fill = self.reddefault, tag=self._ALL, width = self.pad/4)
         angle = pi/2 - pi/6 * (h + m/60.0)
         x, y = cos(angle)*0.70,sin(angle)*0.70
         # draw the hour handle
@@ -264,7 +281,39 @@ class clock:
         sco = self.canvas.create_oval
         sco(self.T.windowToViewport(-ss+x,-ss+y,ss+x,ss+y), fill = self.reddefault)
 
-    
+    def createdictionary(self):
+        """
+        Create dictionary with localtime.json.
+        """
+        with open('localtime.json', encoding='utf-8') as localtime:
+            self.data = json.load(localtime)
+
+    def changetimestamp(self):
+        """
+        Change timestamp according to localtime.json.
+        """
+        if self.index < 19:
+            self.index = self.index + 1
+        else:
+            self.index = 0
+        self.lbl.destroy()
+        self.showtimestamp()
+
+    def showtimestamp(self):
+        """
+        Show label with timezone info.
+        """
+        self.lbl = Label(self.root, text=f"{self.data['cities'][self.index]['city']}/{self.data['cities'][self.index]['region']} - UTC {self.data['cities'][self.index]['offset']}", font=('Helvetica 12 bold'))
+        self.lbl.pack()
+
+    def drawbutton(self):
+        """
+        Draws the button at the top side of the canvas.
+        """
+        tkinter.Button(self.root, text="Change UTC", command=self.changetimestamp).pack()
+
+    """Animates the clock, by redrawing everything after a certain time interval."""
+
     def poll(self):
         """Animates the clock, by redrawing everything after a certain time interval."""
 
@@ -276,7 +325,7 @@ class clock:
         """Get sunrise and sunset time from main location"""
 
         today = datetime.date (datetime.now ())
-        city = LocationInfo("Manaus", "Brazil", 'America/Manaus', -23.6, -46.6)
+        city = LocationInfo(self.data['cities'][self.index]['city'], self.data['cities'][self.index]['region'], f"{self.data['cities'][self.index]['region']}/{self.data['cities'][self.index]['city']}", self.data['cities'][self.index]['coordinates']['latitude'], self.data['cities'][self.index]['coordinates']['longitude'])
         sun_data = sun(city.observer, today,
         tzinfo = pytz.timezone('America/Manaus'))
         hr , mr , _ = datetime.timetuple(sun_data['sunrise'])[3:6]
@@ -286,8 +335,8 @@ class clock:
 def main(argv=None):
     """Main program for testing.
 
-    @param argv time zone, image background flag,
-            clock width, clock height, create thread flag."""
+        @param argv time zone, image background flag,
+        clock width, clock height, create thread flag."""
 
     if argv is None:
        argv = sys.argv
